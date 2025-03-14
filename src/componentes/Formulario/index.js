@@ -35,8 +35,7 @@ const Formulario = (props) => {
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log("Cadastro Salvo com sucesso. Você recebera um código por whatsap, utilize ele para Ativar seu cadastro", data);
-            alert("Cadastro Salvo com sucesso. Você recebera um código por whatsap, utilize ele para Ativar seu cadastro");
+            alert("Cadastro Salvo com sucesso. Seu cadastro sera validado, posteriormente enviaremos mais informações por whatsapp e e-mail orientando os próximos passos.");
 
             setNome('')
             setCnpj('')
