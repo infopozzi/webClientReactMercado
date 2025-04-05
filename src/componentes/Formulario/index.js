@@ -1,109 +1,135 @@
-import { useState } from 'react'
-import Botao from '../Botao'
-import CampoTexto from '../CampoTexto'
-import ListaSuspensa from '../ListaSuspensa'
-import './Formulario.css'
+import { useState } from 'react';
+import Botao from '../Botao';
+import CampoTexto from '../CampoTexto';
+import ListaSuspensa from '../ListaSuspensa';
+import './Formulario.css';
+import { useNavigate } from 'react-router-dom';
 
 const Formulario = (props) => {
+    const navigate = useNavigate();
+    const lsStatus = ["1", "0"];
 
-    const lsStatus = ["1","0"]
-
-    const [nome, setNome] = useState('')
-    const [cnpj, setCnpj] = useState('')
-    const [email, setEmail] = useState('')
-    const [celular, setCelular] = useState('')
-    const [senha, setSenha] = useState('')
-    const [status, setStatus] = useState('')
+    const [nome, setNome] = useState('');
+    const [cnpj, setCnpj] = useState('');
+    const [email, setEmail] = useState('');
+    const [celular, setCelular] = useState('');
+    const [senha, setSenha] = useState('');
+    const [status, setStatus] = useState('');
 
     const handleSubmit = (event) => {
-        event.preventDefault(); // Evita recarregar a página
-    
-        fetch("http://127.0.0.1:8082/mercado/salvar", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id: 0,
-            nome: nome,
-            cnpj: cnpj,
-            email: email,
-            celular: celular,
-            senha: senha,
-            status: 0
-          }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            alert("Cadastro Salvo com sucesso. Seu cadastro sera validado, posteriormente enviaremos mais informações por whatsapp e e-mail orientando os próximos passos.");
+        event.preventDefault();
 
-            setNome('')
-            setCnpj('')
-            setEmail('')
-            setCelular('')
-            setSenha('')
-            setStatus('')
-          })
-          .catch((error) => console.error("Erro ao salvar:", error));
-      };
+        fetch("http://127.0.0.1:8082/mercado/salvar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                id: 0,
+                nome,
+                cnpj,
+                email,
+                celular,
+                senha,
+                status: 0
+            }),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            alert("Cadastro Salvo com sucesso. Seu cadastro será validado e enviaremos mais informações por WhatsApp e e-mail.");
+
+            navigate('/lista-produtos');
+
+            setNome('');
+            setCnpj('');
+            setEmail('');
+            setCelular('');
+            setSenha('');
+            setStatus('');
+        })
+        .catch((error) => console.error("Erro ao salvar:", error));
+    };
 
     return (
         <section className="formulario">
             <form onSubmit={handleSubmit}>
-                <h2>Preencha os dados para cadastra seu mercado</h2>
-                <CampoTexto 
-                    type="text"
-                    obrigatorio={true}
-                    label="Nome"
-                    placeholder="preencha esse campo" 
-                    valor={nome}
-                    aoAlterado={valor => setNome(valor)}
-                />
-                <CampoTexto
-                    type="text"
-                    obrigatorio={true}
-                    label="CNPJ"
-                    placeholder="preencha esse campo" 
-                    valor={cnpj}
-                    aoAlterado={valor => setCnpj(valor)}
-                />
-                <CampoTexto
-                    type="email"
-                    obrigatorio={true}
-                    label="E-mail"
-                    placeholder="preencha esse campo" 
-                    valor={email}
-                    aoAlterado={valor => setEmail(valor)}
-                />
-                <CampoTexto
-                    type="text"
-                    obrigatorio={true}
-                    label="Celular"
-                    placeholder="preencha esse campo" 
-                    valor={celular}
-                    aoAlterado={valor => setCelular(valor)}
-                />
-                <CampoTexto
-                    type="password"
-                    obrigatorio={true}
-                    label="Senha"
-                    placeholder="preencha esse campo" 
-                    valor={senha}
-                    aoAlterado={valor => setSenha(valor)}
-                />
-                <ListaSuspensa
-                    obrigatorio={true}
-                    label="Status" 
-                    itens={lsStatus}
-                    valor={"0"}
-                    aoAlterado={valor => setStatus(valor)}
-                />
-                <Botao>
-                    Cadastrar
-                </Botao>
+                <h2>Preencha os dados para cadastrar seu mercado</h2>
+
+                <div className="formulario-container">
+                    <div className="campo-container">
+                        <CampoTexto 
+                            type="text"
+                            obrigatorio={true}
+                            label="Nome"
+                            placeholder="preencha esse campo"
+                            valor={nome}
+                            aoAlterado={valor => setNome(valor)}
+                        />
+                    </div>
+
+                    <div className="campo-container">
+                        <CampoTexto 
+                            type="text"
+                            obrigatorio={true}
+                            label="CNPJ"
+                            placeholder="preencha esse campo"
+                            valor={cnpj}
+                            aoAlterado={valor => setCnpj(valor)}
+                        />
+                    </div>
+
+                    <div className="campo-container">
+                        <CampoTexto 
+                            type="email"
+                            obrigatorio={true}
+                            label="E-mail"
+                            placeholder="preencha esse campo"
+                            valor={email}
+                            aoAlterado={valor => setEmail(valor)}
+                        />
+                    </div>
+
+                    <div className="campo-container">
+                        <CampoTexto 
+                            type="text"
+                            obrigatorio={true}
+                            label="Celular"
+                            placeholder="preencha esse campo"
+                            valor={celular}
+                            aoAlterado={valor => setCelular(valor)}
+                        />
+                    </div>
+
+                    <div className="campo-container">
+                        <CampoTexto 
+                            type="password"
+                            obrigatorio={true}
+                            label="Senha"
+                            placeholder="preencha esse campo"
+                            valor={senha}
+                            aoAlterado={valor => setSenha(valor)}
+                        />
+                    </div>
+
+                    <div className="campo-container">
+                        <ListaSuspensa 
+                            obrigatorio={true}
+                            label="Status"
+                            itens={lsStatus}
+                            valor={status}
+                            aoAlterado={valor => setStatus(valor)}
+                        />
+                    </div>
+                </div>
+
+                <div className="botao-container">
+                    <Botao>
+                        Cadastrar
+                    </Botao>
+                </div>
             </form>
         </section>
-    )
-}
+    );
+};
 
-export default Formulario
+export default Formulario;
