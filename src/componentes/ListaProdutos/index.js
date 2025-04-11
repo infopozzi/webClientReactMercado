@@ -64,11 +64,11 @@ const ListaProdutos = () => {
                                 <td>{produto.nome}</td>
                                 <td>R$ {produto.preco.toFixed(2)}</td>
                                 <td>{produto.quantidade}</td>
-                                <td><img src='https://m.media-amazon.com/images/I/815s35jNVkL._AC_SY679_.jpg'></img> </td>
+                                <td><img src={produto.imagem}></img> </td>
                                 <td>{produto.status ? "Ativo": "Inativo"}</td>
                                 <td>
-                                    <button onClick={() => editarProduto(produto.id)}>Editar</button>{' '}
-                                    <button onClick={() => excluirProduto(produto.id)}>Excluir</button>
+                                    <button className='button' onClick={() => editarProduto(produto.id)}>Editar</button>{' '}
+                                    <button className='button' onClick={() => excluirProduto(produto.id)}>Excluir</button>
                                 </td>
                             </tr>
                         ))
