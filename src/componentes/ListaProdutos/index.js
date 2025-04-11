@@ -5,7 +5,6 @@ import './ListaProdutos.css';
 const ListaProdutos = () => {
     const [produtos, setProdutos] = useState([]);
     const navigate = useNavigate();
-    const mercado_id = 1;
 
     useEffect(() => {
         fetch(`http://127.0.0.1:5000/produto/listar`)
@@ -16,8 +15,6 @@ const ListaProdutos = () => {
 
     const excluirProduto = (id) => {
         if (window.confirm("Tem certeza que deseja excluir este produto?")) {
-                debugger
-
 
             fetch(`http://127.0.0.1:5000/produto/excluir`, {
                 method: "POST",
@@ -46,6 +43,7 @@ const ListaProdutos = () => {
         <section className="lista-produtos">
             <div className="lista-produtos-header">
                 <h2>Produtos Disponíveis</h2>
+                
                 <button onClick={novoProduto}>Novo Produto</button>
             </div>
             <table>
@@ -54,6 +52,8 @@ const ListaProdutos = () => {
                         <th>Nome</th>
                         <th>Preço</th>
                         <th>Estoque</th>
+                        <th>Imagem</th>
+                        <th>Status</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -64,6 +64,8 @@ const ListaProdutos = () => {
                                 <td>{produto.nome}</td>
                                 <td>R$ {produto.preco.toFixed(2)}</td>
                                 <td>{produto.quantidade}</td>
+                                <td><img src='https://m.media-amazon.com/images/I/815s35jNVkL._AC_SY679_.jpg'></img> </td>
+                                <td>{produto.status ? "Ativo": "Inativo"}</td>
                                 <td>
                                     <button onClick={() => editarProduto(produto.id)}>Editar</button>{' '}
                                     <button onClick={() => excluirProduto(produto.id)}>Excluir</button>

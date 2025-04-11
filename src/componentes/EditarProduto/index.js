@@ -3,49 +3,66 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './EditarProduto.css';
 import CampoTexto from '../CampoTexto';
 import Botao from '../Botao';
+import ListaSuspensa from '../ListaSuspensa';
 
 const EditarProduto = () => {
+    const lsStatus = ["1", "0"];
+
     const { id } = useParams();
     const navigate = useNavigate();
+
     const [produto, setProduto] = useState({
         nome: '',
-        descricao: '',
         preco: '',
-        estoque: '',
-        imagem: '' // novo campo adicionado
-    });
-
-        
+        quantidade: '',
+        imagem: '',
+        status: ''
+    });        
 
     useEffect(() => {
-        debugger
-        fetch(`http://127.0.0.1:5000/produto/obter`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ id }), // mais enxuto
+        fetch(`http://127.0.0.1:5000/produto/obter?id=${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
         })
-        .then(res => res.json())
-        .then(data => setProduto(data))
-        .catch(err => console.error("Erro ao buscar produto:", err));
-    }, [id]);
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            setProduto(data[0]);
+          })
+          .catch((error) => {
+            console.error("Erro ao buscar o produto:", error);
+          });
+      }, []);
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        fetch(`http://127.0.0.1:8082/produtos/${id}`, {
+        fetch(`http://127.0.0.1:5000/produto/alterar`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(produto)
         })
-        .then(() => {
-            alert("Produto atualizado com sucesso!");
+        .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            alert(data.message);
             navigate('/lista-produtos');
-        })
-        .catch(err => console.error("Erro ao atualizar produto:", err));
+          })
+          .catch((error) => {
+            console.error("Erro ao buscar o produto:", error);
+          });
     };
 
     return (
@@ -53,18 +70,14 @@ const EditarProduto = () => {
             <form onSubmit={handleSubmit}>
                 <h2>Editar Produto</h2>
                 <CampoTexto
+                    obrigatorio={true}
                     label="Nome"
                     placeholder="Digite o nome"
                     valor={produto.nome}
                     aoAlterado={(valor) => setProduto({ ...produto, nome: valor })}
                 />
                 <CampoTexto
-                    label="Descrição"
-                    placeholder="Digite uma descrição"
-                    valor={produto.descricao}
-                    aoAlterado={(valor) => setProduto({ ...produto, descricao: valor })}
-                />
-                <CampoTexto
+                    obrigatorio={true}
                     label="Preço"
                     placeholder="Digite o valor"
                     type="number"
@@ -72,18 +85,30 @@ const EditarProduto = () => {
                     aoAlterado={(valor) => setProduto({ ...produto, preco: valor })}
                 />
                 <CampoTexto
+                    obrigatorio={true}
                     label="Estoque"
                     placeholder="Quantidade em estoque"
                     type="number"
-                    valor={produto.estoque}
-                    aoAlterado={(valor) => setProduto({ ...produto, estoque: valor })}
+                    valor={produto.quantidade}
+                    aoAlterado={(valor) => setProduto({ ...produto, quantidade: valor })}
                 />
+                
                 <CampoTexto
                     label="Imagem"
                     placeholder="URL da imagem do produto"
                     valor={produto.imagem}
                     aoAlterado={(valor) => setProduto({ ...produto, imagem: valor })}
                 />
+
+                <div className="campo-container">
+                        <ListaSuspensa 
+                            obrigatorio={true}
+                            label="Status"
+                            itens={lsStatus}
+                            valor={produto.status}
+                            aoAlterado={(valor) => setProduto({ ...produto, status: valor })}
+                            />
+                </div>
 
                 <div className="botao-container">
                     <Botao>Salvar Alterações</Botao>

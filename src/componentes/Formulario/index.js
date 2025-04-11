@@ -7,14 +7,12 @@ import { useNavigate } from 'react-router-dom';
 
 const Formulario = (props) => {
     const navigate = useNavigate();
-    const lsStatus = ["1", "0"];
 
     const [nome, setNome] = useState('');
     const [cnpj, setCnpj] = useState('');
     const [email, setEmail] = useState('');
     const [celular, setCelular] = useState('');
     const [senha, setSenha] = useState('');
-    const [status, setStatus] = useState('');
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -30,8 +28,7 @@ const Formulario = (props) => {
                 cnpj,
                 email,
                 celular,
-                senha,
-                status: 0
+                senha
             }),
         })
         .then((response) => response.json())
@@ -45,7 +42,6 @@ const Formulario = (props) => {
             setEmail('');
             setCelular('');
             setSenha('');
-            setStatus('');
         })
         .catch((error) => console.error("Erro ao salvar:", error));
     };
@@ -111,15 +107,6 @@ const Formulario = (props) => {
                         />
                     </div>
 
-                    <div className="campo-container">
-                        <ListaSuspensa 
-                            obrigatorio={true}
-                            label="Status"
-                            itens={lsStatus}
-                            valor={status}
-                            aoAlterado={valor => setStatus(valor)}
-                        />
-                    </div>
                 </div>
 
                 <div className="botao-container">
