@@ -3,14 +3,41 @@ import { useNavigate } from 'react-router-dom';
 import './ListaProdutos.css';
 
 const ListaProdutos = () => {
+
     const [produtos, setProdutos] = useState([]);
     const navigate = useNavigate();
+    const token = localStorage.getItem('tokenEmpresa');        
 
     useEffect(() => {
-        fetch(`http://127.0.0.1:5000/produto/listar`)
-            .then(response => response.json())
-            .then(data => setProdutos(data[0]))
-            .catch(error => console.error("Erro ao carregar produtos:", error));
+        
+        fetch(`http://127.0.0.1:5000/produto/listar`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              'Authorization': `Bearer ${token}`,
+            },
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+              return response.json();
+            })
+            .then((data) => {
+              
+              if (data.message){
+                alert(data.message)
+                navigate('/login')
+              } else setProdutos(data[0]);
+
+            })
+            .catch((error) => {
+              
+                navigate("/login");
+
+               //console.error("Erro ao buscar o produto:", error);
+            });
+
     }, []);
 
     const excluirProduto = (id) => {
@@ -20,6 +47,7 @@ const ListaProdutos = () => {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
+                  'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify({ id }), // mais enxuto
             })

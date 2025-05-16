@@ -2,12 +2,12 @@
     background-color: #6278f7;
     border-radius: 10px;
     font-weight: 700;
-    font-size: 18px;
-    padding: 32px;
+    font-size: 15px;
+    padding: 10px;
     border: none;
     cursor: pointer;
     color: #FFF;
-    margin: 32px 0;
+    margin: 5px 0;
 }
 
 .botao:hover {

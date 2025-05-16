@@ -1,0 +1,43 @@
+.lista-suspensa label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.lista-suspensa {
+    background-color: #FFF;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.06);
+    width: 100%;
+    border: none;
+    font-size: 15px;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.pedido-botao {
+    text-align: right;
+    background-color: #6278f7;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    color: #FFF;
+    margin: 5px 0;
+}
+
+.espacado{
+    text-align: right;
+    padding: 10px;
+}
+
+.pedido-botao:hover {
+    color: #95FFD4;
+}
+
+table > tfoot {
+    background-color: cornflowerblue;
+    color:white;
+}

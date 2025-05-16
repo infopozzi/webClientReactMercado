@@ -17,7 +17,7 @@ const Formulario = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        fetch("http://127.0.0.1:8082/mercado/salvar", {
+        fetch("http://127.0.0.1:5000/mercado/salvar", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

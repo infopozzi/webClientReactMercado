@@ -11,6 +11,7 @@ const EditarProduto = () => {
 
     const { id } = useParams();
     const navigate = useNavigate();
+    const token = localStorage.getItem('tokenEmpresa');        
 
     const [produto, setProduto] = useState({
         nome: '',
@@ -21,10 +22,12 @@ const EditarProduto = () => {
     });        
 
     useEffect(() => {
+
         fetch(`http://127.0.0.1:5000/produto/obter?id=${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}`,            
           },
         })
           .then((response) => {
@@ -34,7 +37,7 @@ const EditarProduto = () => {
             return response.json();
           })
           .then((data) => {
-            debugger
+            
 
             setProduto(prev => ({...prev,
                 nome: data[0].nome,
@@ -47,13 +50,15 @@ const EditarProduto = () => {
             //setProduto(data[0]);
           })
           .catch((error) => {
-            console.error("Erro ao buscar o produto:", error);
+            navigate("/login");
+
+            //console.error("Erro ao buscar o produto:", error);
           });
       }, []);
 
       const handleSubmit = (event) => {
         event.preventDefault();
-      debugger
+      
         const formData = new FormData();
         formData.append("id", id); 
         formData.append("nome", produto.nome); 
@@ -68,9 +73,12 @@ const EditarProduto = () => {
 
         formData.append("imagem", produto.imagem); 
         formData.append("status", parseInt(produto.status)); 
-      
+
         fetch(`http://127.0.0.1:5000/produto/alterar`, {
           method: "PUT",
+          headers: {
+            'Authorization': `Bearer ${token}`,            
+          },
           body: formData,
         })
           .then((response) => {
@@ -84,7 +92,9 @@ const EditarProduto = () => {
             navigate("/lista-produtos");
           })
           .catch((error) => {
-            console.error("Erro ao salvar o produto:", error);
+            navigate("/login");
+
+            //console.error("Erro ao salvar o produto:", error);
           });
       };
       

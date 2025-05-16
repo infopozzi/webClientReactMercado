@@ -16,6 +16,8 @@ const CadastroProduto = () => {
     const [quantidade, setQuantidade] = useState('');
     const [imagem, setImagem] = useState(null);
     const [status, setStatus] = useState('1');
+    
+    const token = localStorage.getItem('tokenEmpresa');        
 
     const handleSubmit = (event) => {
         
@@ -30,6 +32,9 @@ const CadastroProduto = () => {
       
         fetch(`http://127.0.0.1:5000/produto/cadastrar`, {
           method: "POST",
+          headers: {
+            'Authorization': `Bearer ${token}`,            
+          },
           body: formData,
         })
           .then((response) => {
