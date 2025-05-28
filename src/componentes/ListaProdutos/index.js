@@ -68,7 +68,7 @@ const ListaProdutos = () => {
     };
 
     return (
-        <section className="lista-produtos">
+        <div>
             <div className="lista-produtos-header">
                 <h2>Produtos Disponíveis</h2>
                 
@@ -107,7 +107,7 @@ const ListaProdutos = () => {
                     )}
                 </tbody>
             </table>
-        </section>
+        </div>
     );
 };
 

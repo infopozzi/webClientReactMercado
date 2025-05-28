@@ -17,7 +17,7 @@ const Formulario = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        fetch("http://127.0.0.1:5000/mercado/salvar", {
+        fetch("http://127.0.0.1:5000/mercado/cadastrar", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -33,9 +33,10 @@ const Formulario = (props) => {
         })
         .then((response) => response.json())
         .then((data) => {
-            alert("Cadastro Salvo com sucesso. Seu cadastro será validado e enviaremos mais informações por WhatsApp e e-mail.");
+            
+            alert(data.message);
 
-            navigate('/lista-produtos');
+            navigate('/login');
 
             setNome('');
             setCnpj('');
@@ -47,7 +48,7 @@ const Formulario = (props) => {
     };
 
     return (
-        <section className="formulario">
+        <div>
             <form onSubmit={handleSubmit}>
                 <h2>Preencha os dados para cadastrar seu mercado</h2>
 
@@ -115,7 +116,7 @@ const Formulario = (props) => {
                     </Botao>
                 </div>
             </form>
-        </section>
+        </div>
     );
 };
 

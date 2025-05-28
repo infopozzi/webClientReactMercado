@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CampoTexto from '../CampoTexto';
 import Botao from '../Botao';
 import './CadastroProduto.css';
 import { useNavigate } from 'react-router-dom';
 import ListaSuspensa from '../ListaSuspensa';
 import FileUploadHandler from '../FileUpload';
+
 
 const CadastroProduto = () => {
     const lsStatus = ["1", "0"];
@@ -19,7 +20,19 @@ const CadastroProduto = () => {
     
     const token = localStorage.getItem('tokenEmpresa');        
 
+
+     useEffect(() => {
+            debugger
+      if (!token){
+        navigate("/login");
+    }
+    
+    }, []);
+        
+ 
+
     const handleSubmit = (event) => {
+        debugger
         
         event.preventDefault();
       
