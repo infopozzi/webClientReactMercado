@@ -7,6 +7,7 @@ function Menu() {
         <li><Link to="/">Formulário</Link></li>
         <li><Link to="/lista-produtos">Lista Produtos</Link></li>
         <li><Link to="/pedido">Pedido</Link></li>
+        <li><Link to="/relatorio-pedidos">Relatório de Pedidos</Link></li>
         <li><Link to="/login">Login/Logout</Link></li>
       </ul>
     </nav>

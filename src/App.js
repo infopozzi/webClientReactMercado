@@ -5,6 +5,8 @@ import ListaProdutos from './componentes/ListaProdutos';
 import EditarProduto from './componentes/EditarProduto'; 
 import Login from './componentes/Login'; 
 import Pedidos from './componentes/Pedidos';
+import Relatorio from './componentes/RelatorioPedido';
+
 import Menu from './componentes/Menu';
 
 
@@ -22,6 +24,8 @@ function App() {
             <Route path="/editar-produto/:id" element={<EditarProduto />} />
             <Route path="/login" element={<Login />} />
             <Route path="/pedido" element={<Pedidos />} />
+            <Route path="/relatorio-pedidos" element={<Relatorio />} />
+
           </Routes>
         </div>
       </div>
